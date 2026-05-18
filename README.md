@@ -57,7 +57,7 @@ Leads to overlapping bounding boxes.
  5. Lighting & Weather Variations:Different scenes include shadows, low light, and haze.
 
 Task-02: Model Training :
-The model training pipeline:
+
 
 
 
@@ -119,8 +119,10 @@ sample predictions/results:These are shown in inference results section of the n
 
 Task 5 : 
  prediction outputs :
+
  counting visualization: 
  processed images/results :
+ All these requirements are shown in inference results cell of the notebook
 
 
 
