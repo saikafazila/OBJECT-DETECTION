@@ -36,8 +36,6 @@ Given image size:
 Width = W 
 Height = H 
 Convert pixel coordinates to normalized values:
-
-Example:
 4.Data was saved in one line format for every object.
 
 
@@ -67,8 +65,39 @@ The model training pipeline:
 
 
 
-training approach :
-sample predictions/results
+training approach :1. Data Preprocessing
+
+Filtered VisDrone's 12 classes down to person (classes 1,2) and vehicle (classes 4,5,6,9), discarding irrelevant classes like bicycle and ignored regions
+Images with zero target annotations were discarded to avoid polluting training with empty samples
+
+2. Label Enhancement (Pseudo-labeling)
+
+Original VisDrone labels are sparse — many visible objects were unannotated
+Used a large pretrained YOLOv8x (COCO) as a teacher model to auto-generate dense labels
+Merged auto-labels with original human labels using IoU-based deduplication to avoid duplicate boxes
+This significantly improved training signal, especially for densely parked vehicles
+
+3. Model
+
+Architecture: YOLOv8s (small) pretrained on COCO
+Fine-tuned on the filtered+enhanced VisDrone dataset
+Input resolution: 640px (1280px recommended for small object accuracy)
+
+4. Augmentation
+
+Mosaic, MixUp, random flip (including vertical for drone perspective), rotation, scaling, and translation — all chosen specifically for aerial imagery characteristics
+
+5. Optimization
+
+Optimizer: AdamW with cosine learning rate decay
+Early stopping with patience=15 to prevent overfitting
+Trained for 50 epochs (100 recommended)
+
+6. Inference
+
+Detections filtered by confidence threshold (0.3) and NMS IoU (0.45)
+Post-processing counts persons and vehicles per frame from the bounding box class labels
+sample predictions/results:These are shown in inference results section of the notebook.
 
 
 
