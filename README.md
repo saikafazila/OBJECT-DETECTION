@@ -172,4 +172,4 @@ Errors related to dataset paths and environment setup (Kaggle/Colab) needed debu
 Detecting humans from high-altitude drone images was difficult due to low resolution and scale. 
 Model Optimization
 Balancing training time, batch size, and model performance required experimentation. 
-PS:the output couldnt be shown because of the weak internet connnection leading to time scarsity.It took atleast 20 attempts to run this notebook entirely before final success.
+
